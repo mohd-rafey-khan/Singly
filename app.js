@@ -32,6 +32,7 @@ const user =  mongoose.model("user",userschema);
 
 // set all route.
 var statusvar = "";
+
 app.get("/register",function(req,res){
   res.render("create",{status:statusvar});
 });
@@ -46,7 +47,7 @@ app.post("/register",function(req,res){
         password:req.body.pass
       });
       newclient.save();
-      statusvar = "Sucessfully..";
+      statusvar = " ";
       res.render("home");
     }else{
       console.log(data);
@@ -63,8 +64,10 @@ app.get("/",function(req,res){
 
 app.post("/",function(req,res){
 
+  // console.log(req.body);
+
   user.find({ email: req.body.email}, function (err, data) {
-    console.log(data[0].password);
+    // console.log(data[0].password);
      if(data[0].password === req.body.pass){
        res.render("home");
      }else{
@@ -72,9 +75,21 @@ app.post("/",function(req,res){
        res.redirect("/");
      }
   });
-
 });
 // ==============  //
+app.get("/profile",function(req,res){
+  res.render("profile");
+});
+app.get("/leaderboard",function(req,res){
+  res.render("leaderboard");
+});
+app.get("/notification",function(req,res){
+  res.render("notification");
+});
+app.get("/home",function(req,res){
+  res.render("home");
+});
+
 
 // server listen at 3000 port.
 app.listen(3000,function(req,res){
