@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Singly Card</title>
+    <style media="screen">
+    body{
+      margin: 0;
+      padding: 0;
+    }
+    .bg{
+      width:350px;
+      height:450px;
+      z-index: 1;
+    }
+    .bg img{
+      width: 100%;
+      height: 100%;
+      filter: blur(5px);
+    }
+    .blacklayout{
+      width:350px;
+      height:450px;
+      z-index: 99;
+      position: absolute;
+      background-color: rgba(0,0,0,0.4);
+    }
+    .blacklayout #buttons{
+      width: 100%;
+      height:100%;
+      z-index: 999;
+      cursor: pointer;
+    }
+    .blacklayout #buttons #heart {
+       color: white;
+       position: relative;
+       left: 85%;
+       top: 90%;
+       /* fill:transparent; */
+       /* stroke:10px; */
+    }
+    #buttons #heart #path{
+      fill:transparent;
+      stroke-width:1;
+      stroke:white;
+    }
+
+    .blacklayout .seek-bar{
+      width:100%;
+      height:5px;
+      position: relative;
+      display: flex;
+      background-color:grey;
+    }
+    .blacklayout .seek-bar #fill{
+      /* width:100%; */
+      border-radius: 20px;
+      background-color: white;
+      height: 5px;
+    }
+
+    </style>
+  </head>
+  <body>
+       <div class="bg">
+         <div class="blacklayout">
+             <div id="buttons">
+                  <!-- <button type="button" id = "play" name="button">Play</button> -->
+                  <a id="heart" href="#">
+                    <svg class="bi bi-heart-fill" width="3em" height="2em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                        <path id="path" fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
+                   </svg>
+                  </a>
+                  <!-- <svg class="bi bi-heart-fill" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+  <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
+</svg> -->
+             </div>
+             <div class="seek-bar">
+                   <div id="fill"></div>
+                   <div id="handle"></div>
+             </div>
+         </div>
+          <img src="poster1.jpg" alt="">
+        <div class="content">
+        </div>
+       </div>
+       <script type="text/javascript">
+       var song = 'song1.mp3';
+       const buttons = document.getElementById('buttons');
+       var fillbar = document.getElementById('fill');
+       var path = document.getElementById('path');
+       const heart = document.getElementById('heart');
+
+       var audio = new Audio();
+       audio.src = song;
+       buttons.addEventListener('click',function() {
+            if(audio.paused){
+              audio.play();
+            }
+            else {
+              audio.pause();
+            }
+       });
+       audio.addEventListener('timeupdate',function(){
+         var position = audio.currentTime / audio.duration;
+         fillbar.style.width = position * 100 +"%";
+       });
+       buttons.addEventListener('dblclick',function() {
+           path.style.fill = "white";
+
+       });
+       heart.addEventListener('click',function(){
+           path.style.fill = "transparent";
+       });
+
+       </script>
+  </body>
+</html>
